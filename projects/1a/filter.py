@@ -34,6 +34,9 @@ exec(open(filter_cond_files[0]).read())
 # if -field is given, output all but the given field
 #
 
+if 'label' in fields:
+    fields.remove('label')
+
 if len(sys.argv) == 1:
     #by default print all fields
     outfields = fields
@@ -59,10 +62,10 @@ for line in sys.stdin:
         continue
 
     #unpack into a tuple/dict
-    values = line.rstrip().split(',')
+    values = line.rstrip('\n').split('\t')
     hotel_record = dict(zip(fields, values)) #Hotel(values)
 
     #apply filter conditions
     if filter_cond(hotel_record):
-        output = ",".join([hotel_record[x] for x in outfields])
+        output = "\t".join([hotel_record[x] for x in outfields])
         print(output)

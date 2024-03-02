@@ -2,7 +2,8 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split, GridSearchCV
 
 #
@@ -10,8 +11,10 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 #
 numeric_features = ["if" + str(i) for i in range(1, 14)]
 categorical_features = ["cf" + str(i) for i in range(1, 27)] 
-good_cf = [1,2,5,6,8,9,14,17,19,20,22,23,25]
-bad_cf = ["cf" + str(i) for i in range(1,27) if i not in good_cf]
+good_cf_num = [1,2,5,6,8,9,14,17,19,20,22,23,25]
+# good_cf = ["cf" + str(i) for i in range(1,27) if i in good_cf_num]
+good_cf = categorical_features
+bad_cf = ["cf" + str(i) for i in range(1,27) if i not in good_cf_num]
 fields = ["id", "label"] + numeric_features + categorical_features
 
 #
@@ -32,12 +35,13 @@ categorical_transformer = Pipeline(steps=[
 preprocessor = ColumnTransformer(
     transformers=[
         ('num', numeric_transformer, numeric_features),
-        ('cat', categorical_transformer, categorical_features)
+        ('cat', categorical_transformer, good_cf)
     ]
 )
 
 # Now we have a full prediction pipeline.
 model = Pipeline(steps=[
     ('preprocessor', preprocessor),
-    ('linearregression', LinearRegression())
+    ('logregression', LogisticRegression(max_iter=10000)),
+#    ('svm', SVC())
 ])
