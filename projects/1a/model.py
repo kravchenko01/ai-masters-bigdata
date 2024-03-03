@@ -3,7 +3,6 @@ from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.linear_model import LogisticRegression
-from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split, GridSearchCV
 
 #
@@ -43,5 +42,4 @@ preprocessor = ColumnTransformer(
 model = Pipeline(steps=[
     ('preprocessor', preprocessor),
     ('logregression', LogisticRegression(max_iter=10000)),
-#    ('svm', SVC())
 ])

@@ -41,7 +41,6 @@ logging.info(f"TRAIN_PATH {train_path}")
 #
 read_table_opts = dict(sep="\t", names=fields, index_col=0)
 df = pd.read_table(train_path, **read_table_opts)
-#print(df.head())
 # df.drop(bad_cf, axis=1, inplace=True)
 
 #split train/test
@@ -49,18 +48,13 @@ X_train, X_test, y_train, y_test = train_test_split(
     df.loc[:, df.columns != 'label'], df.loc[:, df.columns == 'label'], test_size=0.33, random_state=42
 )
 
-#print(X_train.head(), '\n', y_train.to_numpy().flatten())
 #
 # Train the model
 #
 model.fit(X_train, y_train.to_numpy().flatten())
 
-#print(model.coef_.shape)
-
 model_score = model.score(X_test, y_test)
 pred = model.predict_proba(X_test)
-#print(pred)
-#print('\n', y_test)
 
 logging.info(f"model score: {model_score:.3f}")
 logging.info(f"log loss: {log_loss(y_test, pred[:, 1])}")
