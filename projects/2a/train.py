@@ -61,4 +61,4 @@ logging.info(f"log loss: {log_loss(y_test, pred[:, 1])}")
 
 
 # save the model
-dump(model, "1a.joblib")
+dump(model, "2a.joblib")

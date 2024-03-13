@@ -17,7 +17,7 @@ logging.info("SCRIPT CALLED AS {}".format(sys.argv[0]))
 logging.info("ARGS {}".format(sys.argv[1:]))
 
 #load the model
-model = load("1a.joblib")
+model = load("2a.joblib")
 
 #read and infere
 if 'label' in fields:
@@ -25,7 +25,7 @@ if 'label' in fields:
 
 read_opts=dict(
         sep='\t', names=fields, index_col=False, header=None,
-        iterator=True, chunksize=100
+        iterator=True, chunksize=100, na_values='\\N'
 )
 
 for df in pd.read_csv(sys.stdin, **read_opts):
