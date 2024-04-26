@@ -15,7 +15,7 @@ from pyspark.ml.evaluation import RegressionEvaluator
 
 model = PipelineModel.load(model_path)
 
-data = spark.read.json(data_path)
+data = spark.read.json(data_path).fillna("null", subset=("reviewText", "summary", "vote")).cache()
 predictions = model.transform(data)
 evaluator = RegressionEvaluator(predictionCol="prediction", labelCol="overall", metricName='rmse')
 

@@ -5,7 +5,7 @@ from pyspark.ml.feature import *
 from pyspark.sql.types import *
 import pyspark.sql.functions as f
 
-lr = LinearRegression(featuresCol="features", labelCol="overall", maxIter=10, regParam=0.1)
+lr = LinearRegression(featuresCol="features", labelCol="overall", maxIter=2, regParam=0.1)
 
 tokenizer1 = Tokenizer(inputCol="reviewText", outputCol="reviewText_words")
 tokenizer2 = Tokenizer(inputCol="summary", outputCol="summary_words")
