@@ -23,4 +23,4 @@ rmse = evaluator.evaluate(predictions)
 
 print("RMSE =", rmse)
 
-predictions.write.parquet("/user/kravchenko01/hw4_predictions", mode="overwrite")
+predictions.write.parquet(pred_path, mode="overwrite")
