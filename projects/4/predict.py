@@ -21,6 +21,6 @@ evaluator = RegressionEvaluator(predictionCol="prediction", labelCol="overall", 
 
 rmse = evaluator.evaluate(predictions)
 
-print("RMSE =", rmse)
+#print("RMSE =", rmse)
 
 predictions.write.parquet(pred_path, mode="overwrite")
