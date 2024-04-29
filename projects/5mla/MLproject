@@ -1,0 +1,10 @@
+name: hw 5 project
+
+conda_env: conda.yaml
+
+entry_points:
+  main:
+    parameters:
+      train_path: path
+      model_param1: {type: float, default: 10000}
+    command: "python train.py {train_path} {model_param1}"
