@@ -36,7 +36,7 @@ except:
 
 
 logging.info(f"TRAIN_PATH {train_path}")
-logging.indo(f"MODEL_PARAM1 {model_param1}")
+logging.info(f"MODEL_PARAM1 {model_param1}")
 
 
 #
