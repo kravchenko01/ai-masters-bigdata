@@ -105,7 +105,7 @@ with mlflow.start_run():
 
     # Log with MLflow
 
-    mlflow.sklearn.log_model(model, artifact_path="LR_model")
+    mlflow.sklearn.log_model(model, artifact_path="model")
     mlflow.log_params(model.get_params())
     mlflow.log_metric("log_loss", log_loss(y_test, pred[:, 1]))
 
