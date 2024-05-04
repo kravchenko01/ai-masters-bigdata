@@ -1,6 +1,6 @@
 # ai-masters-bigdata
 
-Проекты:
+## Проекты:
 
 1. Hadoop Distributed File System, YARN, Map Reduce
 2. HIVE
