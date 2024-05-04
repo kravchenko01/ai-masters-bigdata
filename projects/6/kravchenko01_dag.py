@@ -8,9 +8,9 @@ from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOpe
 pyspark_python = "/opt/conda/envs/dsenv/bin/python"
 
 with DAG(
-        dag_id="hw6_dag",
-        start_date=datetime(2024, 5, 3),
-        schedule=None,
+        dag_id="kravchenko01_dag",
+        start_date=datetime(2024, 5, 4),
+        schedule_interval=None,
         catchup=False,
         description="Это DAG для 6 домашки",
         doc_md = """
@@ -30,7 +30,7 @@ with DAG(
 
     download_train_task = BashOperator(
         task_id='download_train_task',
-        bash_command=f'hdfs dfs -get kravchenko01_train_out {base_dir}/kravchenko01_train_out_local'
+        bash_command=f'hdfs dfs -getmerge kravchenko01_train_out {base_dir}/kravchenko01_train_out_local'
     )
 
     train_task = BashOperator(
@@ -56,7 +56,7 @@ with DAG(
     predict_task = SparkSubmitOperator(
         task_id="predict_task",
         application=f"{base_dir}/infer_model.py",
-        application_args=["--test-in", f'{base_dir}/kravchenko01_test_out', "--pred-out", f'{base_dir}/kravchenko01_hw6_prediction', '--sklearn-model-in', f'{base_dir}/6.joblib'],
+        application_args=["--test-in", f'kravchenko01_test_out', "--pred-out", f'kravchenko01_hw6_prediction', '--sklearn-model-in', f'{base_dir}/6.joblib'],
         spark_binary="/usr/bin/spark3-submit",
         env_vars={"PYSPARK_PYTHON": pyspark_python},
     )

@@ -1,6 +1,8 @@
 import argparse
 
-from sklearn.linear_mode import LogisticRegression
+from sklearn.linear_model import LogisticRegression
+from sklearn.feature_extraction.text import HashingVectorizer
+from sklearn.pipeline import make_pipeline
 import pandas as pd
 from joblib import dump
 
@@ -13,9 +15,12 @@ args = parser.parse_args()
 data = pd.read_json(args.train_in, lines=True)
 
 y = data['label']
-X = data.drop(['label'])
+X = data['reviewText']
 
-model = LogisticRegression()
+model = make_pipeline(
+    HashingVectorizer(n_features=50),
+    LogisticRegression()
+)
 model.fit(X, y)
 
 dump(model, args.model_out)

@@ -22,12 +22,12 @@ spark.sparkContext.setLogLevel('WARN')
 tokenizer = Tokenizer(inputCol="reviewText", outputCol="reviewText_words")
 
 stop_words = StopWordsRemover.loadDefaultStopWords("english")
-swr = StopWordsRemover(inputCol=tokenizer1.getOutputCol(), outputCol="reviewText_words_filtered", stopWords=stop_words)
+swr = StopWordsRemover(inputCol=tokenizer.getOutputCol(), outputCol="reviewText_words_filtered", stopWords=stop_words)
 
-count_vectorizer = CountVectorizer(inputCol=swr1.getOutputCol(), outputCol="word_vector")
+count_vectorizer = CountVectorizer(inputCol=swr.getOutputCol(), outputCol="word_vector")
 
 assembler = VectorAssembler(inputCols=[
-    count_vectorizer1.getOutputCol(),
+    count_vectorizer.getOutputCol(),
 ],outputCol="features")
 
 pipeline = Pipeline(stages=[
@@ -39,11 +39,11 @@ pipeline = Pipeline(stages=[
 
 train_data = spark.read.json(args.path_in).fillna("null", subset=("reviewText"))
 
-train_data = pipeline.transform(train_data)
+#train_data = pipeline.fit(train_data).transform(train_data)
 
 if "label" in train_data.columns:
-    train_data = train_data.select("label", "features", "id")
+    train_data = train_data.select("label", "reviewText", "id")
 else:
-    train_data = train_data.select("features", "id")
+    train_data = train_data.select("reviewText", "id")
 
-train_data.write().overwrite().save(args.path_out)
+train_data.write.mode('overwrite').json(args.path_out)
